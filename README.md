@@ -1,36 +1,84 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Seniorlabs Website
 
-## Getting Started
+A Next.js web application with PostgreSQL database, managed via Docker Compose.
 
-First, run the development server:
+## Tech Stack
+
+- **Framework:** Next.js 16
+- **Language:** TypeScript
+- **Styling:** Tailwind CSS v4
+- **ORM:** Prisma
+- **Database:** PostgreSQL 16
+- **Runtime:** Node.js 20
+
+## Prerequisites
+
+- [Docker](https://docs.docker.com/get-docker/) and [Docker Compose](https://docs.docker.com/compose/install/)
+- [Node.js 20+](https://nodejs.org/) (for local development without Docker)
+
+## Development
+
+Start the app and database with hot-reloading:
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+docker compose -f docker-compose.dev.yml up
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+The app will be available at [http://localhost:3000](http://localhost:3000).
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+The dev setup mounts your local source files into the container, so code changes reflect immediately without rebuilding the image.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+### Run Prisma migrations (dev)
 
-## Learn More
+```bash
+docker compose -f docker-compose.dev.yml exec app npx prisma migrate dev
+```
 
-To learn more about Next.js, take a look at the following resources:
+### Open Prisma Studio (dev)
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+```bash
+docker compose -f docker-compose.dev.yml exec app npx prisma studio
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Production
 
-## Deploy on Vercel
+Build and start the production image:
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+```bash
+docker compose up --build
+```
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+The app will be available at [http://localhost:3000](http://localhost:3000).
+
+### Run Prisma migrations (prod)
+
+```bash
+docker compose exec app npx prisma migrate deploy
+```
+
+## Environment Variables
+
+Both compose files read variables from a `.env` file at the project root. A `.env` file is included with development defaults.
+
+| Variable | Default | Description |
+|---|---|---|
+| `POSTGRES_USER` | `postgres` | PostgreSQL username |
+| `POSTGRES_PASSWORD` | `postgres` | PostgreSQL password |
+| `POSTGRES_DB` | `seniorlabs` | PostgreSQL database name |
+| `DATABASE_URL` | `postgresql://postgres:postgres@db:5432/seniorlabs` | Prisma database connection string |
+
+`NODE_ENV` is set directly in each compose file (`development` for dev, `production` for prod) and is not sourced from `.env`.
+
+## Local Development (without Docker)
+
+```bash
+npm install
+npm run dev
+```
+
+Make sure a PostgreSQL instance is running and `DATABASE_URL` is set in your `.env` file.
+
+```bash
+npx prisma migrate dev   # apply migrations
+npx prisma generate      # generate Prisma client
+```
