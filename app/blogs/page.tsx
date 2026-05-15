@@ -1,6 +1,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import { blogPosts } from "@/app/lib/blogs";
+import RemoveLoadingClass from "@/app/components/RemoveLoadingClass";
 
 export const metadata = {
   title: "Blog — Senior Labs",
@@ -11,6 +12,7 @@ export const metadata = {
 export default function BlogsPage() {
   return (
     <div className="min-h-screen bg-[#0a0a0a] text-white">
+      <RemoveLoadingClass />
       {/* Navbar */}
       <nav className="fixed top-0 left-0 right-0 z-50 bg-black/90 backdrop-blur-md shadow-md">
         <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
