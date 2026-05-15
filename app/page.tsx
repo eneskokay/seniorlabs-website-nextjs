@@ -66,6 +66,7 @@ const navLinks: [string, string][] = [
   ["Apps", "#apps"],
   ["Join Us", "#join"],
   ["Contact", "#contact"],
+  ["Blog", "/blogs"],
 ];
 
 const sectionIds = ["work", "apps", "join", "contact"];
@@ -486,6 +487,7 @@ export default function Home() {
     e: React.MouseEvent<HTMLAnchorElement>,
     href: string,
   ) => {
+    if (!href.startsWith("#")) return;
     if (!isDesktop || !swiperRef.current) return;
     e.preventDefault();
     const id = href.replace("#", "");
