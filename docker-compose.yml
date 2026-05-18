@@ -4,7 +4,7 @@ services:
       context: .
       dockerfile: Dockerfile
     ports:
-      - "3002:3002"
+      - "3002:3000"
     environment:
       - NODE_ENV=production
       - DATABASE_URL=${DATABASE_URL}
@@ -16,7 +16,7 @@ services:
   db:
     image: postgres:16-alpine
     ports:
-      - "5434:5434"
+      - "5434:5432"
     environment:
       - POSTGRES_USER=${POSTGRES_USER}
       - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
