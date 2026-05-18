@@ -4,12 +4,7 @@ import { useState, useEffect, useRef } from "react";
 import Image from "next/image";
 import { motion, type Variants } from "framer-motion";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faInstagram,
-  faLinkedin,
-  faXTwitter,
-  faFacebook,
-} from "@fortawesome/free-brands-svg-icons";
+import { faLinkedin } from "@fortawesome/free-brands-svg-icons";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Mousewheel, Keyboard } from "swiper/modules";
 import type { Swiper as SwiperType } from "swiper";
@@ -51,14 +46,11 @@ const slideRight: Variants = {
 };
 
 const socialLinks = [
-  { icon: faInstagram, href: "#", label: "Instagram" },
   {
     icon: faLinkedin,
-    href: "https://www.linkedin.com/in/seniorlabs",
+    href: "https://www.linkedin.com/company/senior-labs",
     label: "LinkedIn",
   },
-  { icon: faXTwitter, href: "#", label: "X" },
-  { icon: faFacebook, href: "#", label: "Facebook" },
 ];
 
 const navLinks: [string, string][] = [
@@ -130,8 +122,9 @@ function HeroSection({ heightClass }: { heightClass: string }) {
             className="text-gray-400 text-lg max-w-lg leading-relaxed"
             style={{ fontFamily: "'Inter', sans-serif" }}
           >
-            We design and build world-class AI-native mobile experiences. From
-            concept to launch — fast, elegant, and intelligent.
+            We design and build world-class AI-native mobile experiences, taking
+            your vision from concept to launch with speed, elegance, and
+            intelligence built in at every step.
           </motion.p>
 
           <motion.div
@@ -188,6 +181,13 @@ function HeroSection({ heightClass }: { heightClass: string }) {
   );
 }
 
+const appStats = [
+  { label: "APP STORE", value: "0.0", sub: "Rating", stars: true },
+  { label: "GOOGLE PLAY", value: "0.0", sub: "Rating", stars: true },
+  { label: "AGE", value: "4+", sub: "Rated for", stars: false },
+  { label: "LANGUAGES", value: "4", sub: "Supported", stars: false },
+];
+
 function AppsSection({ heightClass }: { heightClass: string }) {
   return (
     <section
@@ -197,83 +197,190 @@ function AppsSection({ heightClass }: { heightClass: string }) {
         background: "linear-gradient(135deg, #1a0a2e 0%, #2d1b4e 100%)",
       }}
     >
-      <div className="max-w-7xl mx-auto px-6 py-24 grid grid-cols-1 lg:grid-cols-2 gap-16 items-center w-full">
+      <div className="max-w-7xl mx-auto px-6 py-16 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center w-full">
+        {/* Left: overlapping phone mockups */}
         <motion.div
-          className="flex flex-col gap-6"
+          className="relative flex items-center justify-center"
+          style={{ height: "620px" }}
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, amount: 0.3 }}
           variants={slideLeft}
         >
-          <span
-            className="text-xs text-[#FC8E1A] tracking-[0.3em] uppercase"
-            style={{ fontFamily: "'Orbitron', sans-serif" }}
-          >
-            Featured App
-          </span>
+          <div className="absolute w-80 h-80 bg-purple-500 opacity-20 blur-3xl rounded-full pointer-events-none" />
 
-          <h2
-            className="text-6xl md:text-7xl font-bold text-white"
-            style={{ fontFamily: "'Orbitron', sans-serif" }}
+          {/* Back phone — photo-2, rotated left */}
+          <div
+            className="absolute rounded-[2.5rem] overflow-hidden"
+            style={{
+              width: "246px",
+              height: "528px",
+              left: "calc(50% - 200px)",
+              bottom: "10px",
+              zIndex: 1,
+              transform: "rotate(-8deg)",
+              boxShadow: "0 30px 70px rgba(0,0,0,0.65)",
+            }}
           >
-            GenlyAI
-          </h2>
-
-          <p
-            className="text-gray-300 text-lg leading-relaxed max-w-lg"
-            style={{ fontFamily: "'Inter', sans-serif" }}
-          >
-            Your AI-powered personal companion. Smart, intuitive, and always
-            learning — GenlyAI redefines what a mobile assistant can be.
-          </p>
-
-          <div className="w-20 h-20 rounded-2xl bg-gradient-to-br from-[#FC8E1A] to-[#ff4e00] flex items-center justify-center shadow-lg">
-            <span
-              className="text-white font-bold text-2xl"
-              style={{ fontFamily: "'Orbitron', sans-serif" }}
-            >
-              GA
-            </span>
+            <Image
+              src="/genlyai-photo-2.webp"
+              alt="Genly AI UI"
+              fill
+              className="object-cover"
+            />
           </div>
 
-          <div className="flex gap-3 flex-wrap">
-            {["iOS & Android", "AI Native"].map((tag) => (
-              <span
-                key={tag}
-                className="px-4 py-1.5 border border-purple-400/40 text-purple-200 rounded-full text-sm"
-                style={{ fontFamily: "'Inter', sans-serif" }}
-              >
-                {tag}
-              </span>
-            ))}
+          {/* Front phone — photo-1, upright */}
+          <div
+            className="absolute rounded-[2.5rem] overflow-hidden"
+            style={{
+              width: "246px",
+              height: "528px",
+              left: "calc(50% - 50px)",
+              top: "10px",
+              zIndex: 2,
+              boxShadow: "0 30px 70px rgba(0,0,0,0.65)",
+            }}
+          >
+            <Image
+              src="/genlyai-photo-1.png"
+              alt="Genly AI photo"
+              fill
+              className="object-cover"
+            />
           </div>
         </motion.div>
 
+        {/* Right: app info */}
         <motion.div
-          className="flex items-center justify-center relative py-12"
+          className="flex flex-col gap-5"
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, amount: 0.3 }}
           variants={slideRight}
         >
-          <div className="absolute w-72 h-72 bg-purple-500 opacity-30 blur-3xl rounded-full pointer-events-none" />
-          <div className="relative w-[260px] h-[540px] md:w-[315px] md:h-[653px] animate-float">
-            <div className="absolute inset-0 z-0 top-[2%] left-[4%] right-[4%] bottom-[2%] rounded-[2rem] overflow-hidden">
+          {/* Icon + name */}
+          <div className="flex items-center gap-4">
+            <div className="w-16 h-16 rounded-2xl overflow-hidden flex-shrink-0">
               <Image
-                src="/genlyai-home.webp"
-                alt="GenlyAI app screenshot"
-                fill
-                className="object-cover"
+                src="/genlyai-app-icon.png"
+                alt="Genly AI icon"
+                width={64}
+                height={64}
+                className="object-cover w-full h-full"
               />
             </div>
-            <div className="absolute inset-0 z-10">
-              <Image
-                src="/phone.png"
-                alt="Phone frame mockup"
-                fill
-                className="object-contain"
-              />
-            </div>
+            <span
+              className="text-white text-2xl font-bold"
+              style={{ fontFamily: "'Inter', sans-serif" }}
+            >
+              Genly AI
+            </span>
+          </div>
+
+          {/* Headline */}
+          <div>
+            <h2
+              className="text-4xl lg:text-5xl font-bold text-white leading-tight"
+              style={{ fontFamily: "'Inter', sans-serif" }}
+            >
+              AI Product Photo
+            </h2>
+            <h2
+              className="text-4xl lg:text-5xl font-bold leading-tight"
+              style={{
+                fontFamily: "'Inter', sans-serif",
+                background: "linear-gradient(90deg, #e879f9, #a855f7)",
+                WebkitBackgroundClip: "text",
+                WebkitTextFillColor: "transparent",
+              }}
+            >
+              Maker &amp; Enhancer
+            </h2>
+          </div>
+
+          {/* Description */}
+          <p
+            className="text-gray-300 text-base leading-relaxed max-w-md"
+            style={{ fontFamily: "'Inter', sans-serif" }}
+          >
+            Transform ordinary product shots into studio-quality images in
+            seconds. No equipment, no expertise, just point, shoot, and let
+            Genly AI do the rest.
+          </p>
+
+          {/* Download button */}
+          <div>
+            <a
+              href="https://getgenly.co/"
+              className="inline-flex items-center gap-2 px-7 py-3 bg-white text-black font-bold rounded-full text-base hover:bg-gray-100 transition-colors duration-200"
+              style={{ fontFamily: "'Inter', sans-serif" }}
+            >
+              <svg
+                className="w-4 h-4"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+                strokeWidth={2.5}
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M19 14l-7 7m0 0l-7-7m7 7V3"
+                />
+              </svg>
+              Download
+            </a>
+          </div>
+
+          {/* Stats */}
+          <div className="grid grid-cols-4 gap-2 mt-1">
+            {appStats.map(({ label, value, sub, stars }) => (
+              <div
+                key={label}
+                className="flex flex-col gap-1 p-3 rounded-xl"
+                style={{
+                  background: "rgba(255,255,255,0.07)",
+                  border: "1px solid rgba(255,255,255,0.1)",
+                }}
+              >
+                <span
+                  className="text-gray-400 uppercase tracking-wider"
+                  style={{
+                    fontFamily: "'Inter', sans-serif",
+                    fontSize: "0.58rem",
+                  }}
+                >
+                  {label}
+                </span>
+                {stars && (
+                  <div className="flex gap-0.5">
+                    {[...Array(5)].map((_, i) => (
+                      <svg
+                        key={i}
+                        className="w-3 h-3 text-yellow-400"
+                        fill="currentColor"
+                        viewBox="0 0 20 20"
+                      >
+                        <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                      </svg>
+                    ))}
+                  </div>
+                )}
+                <span
+                  className="text-white font-bold text-lg"
+                  style={{ fontFamily: "'Inter', sans-serif" }}
+                >
+                  {value}
+                </span>
+                <span
+                  className="text-gray-400 text-xs"
+                  style={{ fontFamily: "'Inter', sans-serif" }}
+                >
+                  {sub}
+                </span>
+              </div>
+            ))}
           </div>
         </motion.div>
       </div>
@@ -342,7 +449,7 @@ function JoinSection({ heightClass }: { heightClass: string }) {
           className="flex flex-wrap gap-4 justify-center"
         >
           <a
-            href="https://www.linkedin.com/in/seniorlabs"
+            href="https://www.linkedin.com/company/senior-labs/jobs/"
             target="_blank"
             rel="noopener noreferrer"
             className="px-10 py-4 border-2 border-[#FC8E1A] text-[#FC8E1A] font-bold text-lg rounded-lg transition-all duration-200 hover:scale-105 hover:bg-[#FC8E1A]/10"
@@ -566,7 +673,7 @@ export default function Home() {
 
   const loadingScreen = (
     <motion.div
-      className="fixed inset-0 z-[100] flex items-center justify-center bg-[#0a0a0a] pointer-events-none"
+      className={`fixed inset-0 z-[100] flex items-center justify-center bg-[#0a0a0a] ${loaded ? "pointer-events-none" : ""}`}
       initial={{ opacity: 1 }}
       animate={{ opacity: loaded ? 0 : 1 }}
       transition={{ duration: 0.6, ease: [0.25, 0.1, 0.25, 1] }}

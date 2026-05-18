@@ -5,6 +5,18 @@ export const metadata: Metadata = {
   title: "Senior Labs — AI Powered Mobile App Labs",
   description:
     "We design and build world-class AI-native mobile experiences. From concept to launch — fast, elegant, and intelligent.",
+  icons: {
+    icon: [
+      { url: "/favicon/favicon-96x96.png", sizes: "96x96", type: "image/png" },
+      { url: "/favicon/favicon.svg", type: "image/svg+xml" },
+      { url: "/favicon/favicon.ico", rel: "shortcut icon" },
+    ],
+    apple: [{ url: "/favicon/apple-touch-icon.png", sizes: "180x180" }],
+  },
+  manifest: "/favicon/site.webmanifest",
+  appleWebApp: {
+    title: "seniorlabs",
+  },
 };
 
 export default function RootLayout({
